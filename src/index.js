@@ -17,22 +17,26 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-    if (!Array.isArray(array) || !array.length) {
+    let counter = 0;
+
+    if ( ((array instanceof Array) === false) || (array.length <= 0) ) {
         throw new Error('empty array');
-    }
-    if (typeof fn !== 'function') { // или (typeof fn !== typeof new Function)
+    } else if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
-    }
-    let isTrue = true;
+    } else {
+        for (let item of array) {
+            let res = fn(item);
 
-    array.filter( item => {
-        if (fn(item) === false) {
-            isTrue = false;
+            if (res === true) {
+                counter ++;
+            }
         }
-    });
+        if (counter === array.length) {
+            return true;
+        }
 
-    return isTrue;
-
+        return false;
+    }
 }
 
 /*
@@ -52,22 +56,27 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn) {
-    if (!Array.isArray(array) || !array.length) {
+    let counter = 0;
+
+    if ((array instanceof Array === false) || (array.length <= 0)) {
         throw new Error('empty array');
-    }
-    if (typeof fn !== 'function' ) {
+    } else if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
-    }
+    } else {
+        for (let item of array) {
+            let res = fn(item);
 
-    let isFalse = false;
+            if (res === true) {
+                counter ++;
+            }
 
-    array.filter( item => {
-        if (fn(item) === true) {
-            isFalse = true;
         }
-    });
+        if (counter === 0) {
+            return false;
+        }
 
-    return isFalse;
+        return true;
+    }
 }
 
 /*
